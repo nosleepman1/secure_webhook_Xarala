@@ -7,8 +7,17 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
+      // Contrainte unique = protection anti-replay au niveau DB,
+      // atomique même en cas de requêtes simultanées
+      table.string('transaction_id').notNullable().unique()
+
+      table.integer('order_id').unsigned().references('id').inTable('orders').onDelete('CASCADE')
+      table.enum('status', ['success', 'failed']).notNullable()
+      table.decimal('amount_received', 12, 2).notNullable()
+      table.boolean('amount_mismatch').notNullable().defaultTo(false)
+      table.jsonb('raw_payload').notNullable()
+      table.timestamp('processed_at').notNullable()
       table.timestamp('created_at')
-      table.timestamp('updated_at')
     })
   }
 

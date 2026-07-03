@@ -32,6 +32,46 @@ export class AuthAccessTokenSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class OrderSchema extends BaseModel {
+  static $columns = ['amount', 'createdAt', 'id', 'orderId', 'status', 'updatedAt'] as const
+  $columns = OrderSchema.$columns
+  @column()
+  declare amount: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare orderId: string
+  @column()
+  declare status: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class PaymentEventSchema extends BaseModel {
+  static $columns = ['amountMismatch', 'amountReceived', 'createdAt', 'id', 'orderId', 'processedAt', 'rawPayload', 'status', 'transactionId'] as const
+  $columns = PaymentEventSchema.$columns
+  @column()
+  declare amountMismatch: boolean
+  @column()
+  declare amountReceived: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare orderId: number | null
+  @column.dateTime()
+  declare processedAt: DateTime
+  @column()
+  declare rawPayload: any
+  @column()
+  declare status: string
+  @column()
+  declare transactionId: string
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
