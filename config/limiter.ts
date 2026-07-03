@@ -1,25 +1,21 @@
 import env from '#start/env'
 import { defineConfig, stores } from '@adonisjs/limiter'
 
+const limiterStore = env.get('LIMITER_STORE') === 'redis' ? 'memory' : env.get('LIMITER_STORE')
+
 const limiterConfig = defineConfig({
-  default: env.get('LIMITER_STORE'),
+  default: limiterStore || 'memory',
   stores: {
-    
     /**
      * Redis store to save rate limiting data inside a
      * redis database.
-     *
-     * It is recommended to use a separate database for
-     * the limiter connection.
      */
     redis: stores.redis({}),
-    
-    
+
     /**
-     * Memory store could be used during
-     * testing
+     * Memory store is used by default to keep local/test runs deterministic.
      */
-    memory: stores.memory({})
+    memory: stores.memory({}),
   },
 })
 

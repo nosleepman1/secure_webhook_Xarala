@@ -72,6 +72,25 @@ export class PaymentEventSchema extends BaseModel {
   declare transactionId: string
 }
 
+export class RegistrationSchema extends BaseModel {
+  static $columns = ['city', 'createdAt', 'email', 'id', 'name', 'phoneWhatsapp', 'updatedAt'] as const
+  $columns = RegistrationSchema.$columns
+  @column()
+  declare city: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare email: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column()
+  declare phoneWhatsapp: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
