@@ -92,10 +92,11 @@ export default class WebhooksController {
       await order.save()
     })
 
-    logger.info(
-      { orderId: order.orderId, transactionId: paymentEvent.transactionId },
-      '[DELIVERY] Accès au cours débloqué (simulation)'
-    )
+    // 7. Livraison de l'accès au cours, déléguée à un service dédié
+    await triggerCourseDelivery({
+      orderId: order.orderId,
+      transactionId: paymentEvent.transactionId,
+    })
 
     return response.ok({ status: 'processed' })
   }
