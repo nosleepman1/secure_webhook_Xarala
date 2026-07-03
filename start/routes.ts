@@ -10,6 +10,12 @@
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
+import WebhooksController from '#controllers/webhooks_controller'
+
+
+router.post('/webhooks/payment', [WebhooksController, 'handle'])
+
+
 
 router.get('/', () => {
   return { hello: 'world' }
@@ -33,5 +39,7 @@ router
       .prefix('account')
       .as('profile')
       .use(middleware.auth())
+
+    
   })
   .prefix('/api/v1')

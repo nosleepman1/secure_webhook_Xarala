@@ -1,11 +1,17 @@
 /* eslint-disable prettier/prettier */
 import type { AdonisEndpoint } from '@tuyau/core/types'
-import type { Registry } from './schema'
-import type { ApiDefinition } from './tree'
+import type { Registry } from './schema.d.ts'
+import type { ApiDefinition } from './tree.d.ts'
 
 const placeholder: any = {}
 
 const routes = {
+  'webhooks': {
+    methods: ["POST"],
+    pattern: '/webhooks/payment',
+    tokens: [{"old":"/webhooks/payment","type":0,"val":"webhooks","end":""},{"old":"/webhooks/payment","type":0,"val":"payment","end":""}],
+    types: placeholder as Registry['webhooks']['types'],
+  },
   'auth.new_account.store': {
     methods: ["POST"],
     pattern: '/api/v1/auth/signup',

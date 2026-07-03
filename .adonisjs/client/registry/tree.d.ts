@@ -2,6 +2,7 @@
 import type { routes } from './index.ts'
 
 export interface ApiDefinition {
+  webhooks: typeof routes['webhooks']
   auth: {
     newAccount: {
       store: typeof routes['auth.new_account.store']
